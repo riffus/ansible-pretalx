@@ -26,7 +26,7 @@
 - name: Install redis client
   pip:
     name: django_redis
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
     virtualenv: "{{ pretalx_virtualenv }}"
   become: true
   become_user: "{{ pretalx_system_user }}"
@@ -38,7 +38,7 @@
 - name: Install gunicorn
   pip:
     name: gunicorn
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
     virtualenv: "{{ pretalx_virtualenv }}"
   become: true
   become_user: "{{ pretalx_system_user }}"
@@ -90,7 +90,7 @@
 - name: Install pretalx (latest)
   pip:
     name: "pretalx{{ pretalx_extra }}"
-    state: latest  # noqa package-latest
+    state: latest # noqa package-latest
     virtualenv: "{{ pretalx_virtualenv }}"
   notify:
     - Restart pretalx service
@@ -108,7 +108,7 @@
 - name: Install pretalx (versioned)
   pip:
     name: "pretalx{{ pretalx_extra }}"
-    version: "{{ pretalx_version }}"  # noqa package-lastest
+    version: "{{ pretalx_version }}" # noqa package-lastest
     virtualenv: "{{ pretalx_virtualenv }}"
   notify:
     - Restart pretalx service
@@ -177,7 +177,7 @@
 - name: Install systemd socket
   template:
     src: pretalx.socket.j2
-    dest: /etc/systemd/system/pretalx@.socket
+    dest: /etc/systemd/system/pretalx@{{ pretalx_instance_identifier }}.socket
     mode: "0644"
   notify:
     - Reload systemd services
@@ -188,7 +188,7 @@
 - name: Install systemd service
   template:
     src: pretalx.service.j2
-    dest: /etc/systemd/system/pretalx@.service
+    dest: /etc/systemd/system/pretalx@{{ pretalx_instance_identifier }}.service
     mode: "0644"
   notify:
     - Reload systemd services
@@ -200,7 +200,7 @@
 - name: Install worker service
   template:
     src: pretalx-worker.service.j2
-    dest: /etc/systemd/system/pretalx-worker@.service
+    dest: /etc/systemd/system/pretalx-worker@{{ pretalx_instance_identifier }}.service
     mode: "0644"
   notify:
     - Reload systemd services
